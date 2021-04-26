@@ -18,11 +18,9 @@
 
 .create_intention {
     display: flex;
-    margin-bottom: 2em;
     align-items: center;
-}
-.create_intention > * {
-    margin-left: .5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .intention[status='completed'] .intention_title {
@@ -65,7 +63,6 @@ input[name="neverminded"] {
 }
 
 .intention_day {
-    margin-top: 1em;
     margin-bottom: 1em;
 }
 .intention_list {

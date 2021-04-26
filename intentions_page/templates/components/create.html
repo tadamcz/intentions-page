@@ -1,7 +1,9 @@
-<div class="create_intention">Add an intention
+<div class="create_intention">
 <form action="{% url 'create' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="title" id="title" required/>
-    <input type="submit" value="Submit" />
+    <div class="d-flex flex-wrap">
+        <input class="form-control-md mr-1 mr-sm-2" name="title" id="title" required placeholder="Add an intention"/>
+        <button class="btn btn-md btn-primary">Submit</button>
+    </div>
 </form>
 </div>
