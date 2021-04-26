@@ -149,7 +149,7 @@ STATICFILES_DIRS = [str(APPS_DIR / "static")]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    # "django.contrib.staticfiles.finders.AppDirectoriesFinder", # tmk: I commented this out because it was messing with static file serving, though I don't understand why
 ]
 
 # MEDIA
