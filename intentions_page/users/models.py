@@ -2,7 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 
 class User(AbstractUser):
     """Default user for intentions page."""
@@ -20,3 +21,18 @@ class User(AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"username": self.username})
+
+@receiver(pre_save, sender=User)
+def update_username_from_email(sender, instance, **kwargs):
+    '''
+    https://stackoverflow.com/a/27458036/
+    '''
+    user_email = instance.email
+    username = user_email
+
+    n = 1
+    while User.objects.exclude(pk=instance.pk).filter(username=username).exists():
+        n += 1
+        username = user_email + '-' + str(n)
+
+    instance.username = username
