@@ -11,3 +11,74 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+#application {
+    margin: .5em;
+}
+
+.create_intention {
+    display: flex;
+    margin-bottom: 2em;
+    align-items: center;
+}
+.create_intention > * {
+    margin-left: .5em;
+}
+
+.intention[status='completed'] .intention_title {
+    text-decoration: line-through;
+}
+
+.intention[status='neverminded'] .intention_title {
+    text-decoration: line-through;
+}
+
+.intention[status='neverminded'] .complete_check {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.intention[status='neverminded'] .intention_title {
+    opacity: 0.5;
+    color: red;
+    pointer-events: none;
+}
+
+input[name="neverminded"] {
+    display: none;
+}
+
+.intention:hover {
+    background-color: aliceblue;
+}
+
+.intention form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.intention_title {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.intention_day {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.intention_list {
+    max-width: 30em;
+}
+
+
+/*Customize Bootstrap dropdown-toggle*/
+.intention .dropdown-toggle {
+    background-color: transparent;
+    border: transparent;
+    color: black;
+}
+.intention .dropdown-toggle::after {
+    display: none;
+}

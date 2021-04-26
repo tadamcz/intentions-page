@@ -1,0 +1,36 @@
+<div class="intention" status="{{ intention.get_status }}">
+<form method="post" action="edit/{{ intention.id }}" onchange="this.submit()">
+    {% csrf_token %}
+
+    <label class="intention_title">
+            <span class="complete_check">{{ intention.edit_form.completed }}</span>
+            {{ intention.title }}
+    </label>
+
+    <div class="intention_buttons dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ intention.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ intention.id }}">
+            {% if intention.get_status != 'completed' %}
+                <label class="nevermind dropdown-item">
+                    {% if intention.get_status == 'neverminded'%}
+                        Un-nevermind
+                    {% elif intention.get_status == 'active' %}
+                        Nevermind
+                    {% endif %}
+
+                    {{ intention.edit_form.neverminded }}
+                </label>
+            {% endif %}
+            <li class="append_button dropdown-item">Append</li>
+        </div>
+    </div>
+</form>
+
+<form method="post" action="append/{{ intention.id }}">
+    {% csrf_token %}
+    <input type="hidden" name="append" class="append_field">
+</form>
+
+</div>

@@ -1,0 +1,14 @@
+<div class="intention_day">
+    <h4>Intentions for {{ date|date:"l j F Y"}}</h4>
+    <div class="intention_list">
+      {% if intentions %}
+        {% for intention in intentions %}
+              <div>
+                  {% include "components/single_intention.html" %}
+              </div>
+          {% endfor %}
+    {% else %}
+    No intentions
+    {% endif %}
+    </div>
+</div>

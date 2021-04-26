@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if intentions_by_date %}
+        {% for date,intentions in intentions_by_date.items %}
+            {% include "components/list.html" %}
+        {% endfor %}
+    {% else %}
+    No intentions
+    {% endif %}
+
+{% endblock %}
