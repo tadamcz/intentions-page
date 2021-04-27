@@ -5,19 +5,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
 def home(request):
-    today = timezone.now().date()
-    intentions = Intention.objects.filter(creator=request.user, date=today)
-    for i in intentions:
-        i.edit_form = IntentionEditForm(instance=i)
+    if request.user.is_authenticated:
+        today = timezone.now().date()
+        intentions = Intention.objects.filter(creator=request.user, date=today)
+        for i in intentions:
+            i.edit_form = IntentionEditForm(instance=i)
 
-    context = {
-        'date': today,
-        'intentions': intentions
-    }
-
-    return render(request, 'pages/home.html', context)
+        context = {
+            'date': today,
+            'intentions': intentions
+        }
+        return render(request, 'pages/home.html', context)
+    else:
+        return render(request, 'pages/welcome.html')
 
 @login_required
 def history(request):

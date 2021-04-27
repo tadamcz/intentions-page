@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h2>A to-do list based on simple principles</h2>
+
+  <ol>
+
+  <h5 class="text-muted"><li>You only add intentions for the current day. </h5>
+    <p>What do you want to achieve <i>today</i>?</p>
+  <h5 class="text-muted"><li>Start each day with a fresh list. </li></h5>
+    <p>Intentions for past days go to your history. Don't get weighed down by stale tasks.</p>
+  <h5 class="text-muted"><li>No fiddling with your task list. Get stuff done instead.</li></h5>
+    <p>No editing intentions. You can append text if new information arises.</p>
+    <p>No deleting intentions. You can't un-intend to do something. No longer a priority? Mark it as 'Never mind'.</p>
+  </ol>
+
+  <br>
+  <a type="button" class="btn btn-primary btn-lg" href="{% url 'account_signup' %}">Sign up</a>
+  <a type="button" class="btn btn-secondary btn-lg" href="{% url 'account_login' %}">Sign in</a>
+
+  <br><br><br>Like these principles? Check out <a href="https://complice.co">Complice</a>, a more fully featured application ($10/month). We totally copied their best design choices.
+{% endblock %}
