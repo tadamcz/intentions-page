@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Intention(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=500)
     date = models.DateField(default=timezone.now)
     created_datetime = models.DateTimeField(default=timezone.now)
 
