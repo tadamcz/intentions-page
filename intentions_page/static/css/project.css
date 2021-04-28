@@ -79,3 +79,8 @@ input[name="neverminded"] {
 .intention .dropdown-toggle::after {
     display: none;
 }
+
+
+.intentions_brand {
+  font-weight: bolder;
+}
