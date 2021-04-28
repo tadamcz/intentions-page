@@ -75,7 +75,7 @@
             {% url 'history' as history_url %}
 
             <li class="nav-item {% if request.path == home_url %}active{% endif %}">
-              <a class="nav-link" href="{% url 'home' %}">Home</a>
+              <a class="nav-link" href="{% url 'home' %}">Today</a>
             </li>
             <li class="nav-item {% if request.path == history_url %}active{% endif %}">
               <a class="nav-link" href="{% url 'history' %}">History</a>
