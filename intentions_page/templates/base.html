@@ -13,7 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="intentions.page">
     <meta property="og:description" content="A to-do list based on simple principles">
-    <meta property="og:image" content="{% static 'images/intentions-page-meta.png' %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/intentions-page-meta.png' %}">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
@@ -21,7 +21,7 @@
     <meta property="twitter:url" content="https://intentions.page">
     <meta name="twitter:title" content="intentions.page">
     <meta name="twitter:description" content="A to-do list based on simple principles">
-    <meta name="twitter:image" content="{% static 'images/intentions-page-meta.png' %}">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/intentions-page-meta.png' %}">
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
