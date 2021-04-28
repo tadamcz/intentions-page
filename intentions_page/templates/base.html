@@ -80,12 +80,18 @@
             <li class="nav-item {% if request.path == history_url %}active{% endif %}">
               <a class="nav-link" href="{% url 'history' %}">History</a>
             </li>
+          </ul>
 
+          <ul class="navbar-nav">
             {% if request.user.is_authenticated %}
-              <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li class="nav-item dropdown navbar-right">
+              <a class="nav-link dropdown-toggle d-none d-sm-block" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ request.user.username }}
+              </a>
+              <a class="nav-link dropdown-toggle d-block d-sm-none" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ request.user.username|truncatechars:15 }}
               </a>
+
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'account_email' %}">Account</a>
                 <a class="dropdown-item" href="{% url 'account_logout' %}">Sign out</a>
