@@ -65,7 +65,7 @@ input[name="neverminded"] {
 .intention_day {
     margin-bottom: 1em;
 }
-.intention_list {
+.intention_list, .create_intention {
     max-width: 30em;
 }
 
