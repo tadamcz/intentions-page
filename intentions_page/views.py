@@ -3,7 +3,8 @@ from intentions_page.models import Intention
 import django.utils.timezone as timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import get_user
+from django.core.exceptions import PermissionDenied
 
 def home(request):
     if request.user.is_authenticated:
@@ -61,8 +62,8 @@ def create(request):
 def edit(request, primary_key):
     intention = Intention.objects.get(id=primary_key)
 
-    if intention.creator.id != request.user.id:
-        raise Exception('Wrong User', intention.creator.id, request.user.id)
+    if intention.creator != get_user(request):
+        raise PermissionDenied
 
     if request.method == 'POST':
         form = IntentionEditForm(request.POST, instance=intention)
@@ -76,8 +77,8 @@ def append(request, primary_key):
     if request.method == 'POST':
         intention = Intention.objects.get(id=primary_key)
 
-        if intention.creator.id != request.user.id:
-            raise Exception('Wrong User', intention.creator.id, request.user.id)
+        if intention.creator != get_user(request):
+            raise PermissionDenied
 
         intention.title += ' ' + request.POST['append']
         intention.save()
