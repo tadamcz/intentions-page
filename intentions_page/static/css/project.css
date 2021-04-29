@@ -85,6 +85,10 @@ input[name="neverminded"] {
   font-weight: bolder;
 }
 
+.navbar {
+  margin-bottom: 0.5rem;
+}
+
 .intention_list [has_keyboard_focus] {
   background-color: #ebf6f7;
 }
