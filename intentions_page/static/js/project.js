@@ -139,6 +139,10 @@ Mousetrap.bind('a', function (e) {
     }
 })
 
+$('.appendTextModal').on('shown.bs.modal', function (e) {
+    $(this).find('.append_field').focus()
+})
+
 Mousetrap.bind('f', function (e) {
     var has_focus = $('.intention_list').find('[has_keyboard_focus]')
     if (has_focus.length){
