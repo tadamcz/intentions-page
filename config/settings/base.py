@@ -265,6 +265,7 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_ADAPTER = "intentions_page.users.adapters.AccountAdapter"
 SOCIALACCOUNT_ADAPTER = "intentions_page.users.adapters.SocialAccountAdapter"
+ACCOUNT_SESSION_REMEMBER = True
 
 # Use email in place of username
 ACCOUNT_EMAIL_REQUIRED = True
