@@ -61,10 +61,10 @@
   </head>
 
   <body>
-
+  <div id="page_wrapper">
     {% include 'components/navbar.html' %}
 
-    <div class="container">
+    <div class="container" id="_content">
 
       {% if messages %}
           {% for message in messages %}
@@ -93,5 +93,6 @@
           {% include 'components/feedback.html' %}
       </div>
     </footer>
+  </div>
   </body>
 </html>
