@@ -51,6 +51,7 @@
       <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
       <!-- Your stuff: Third-party javascript libraries go here -->
+      <script defer src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098"></script>
 
       <!-- place project specific Javascript in this file -->
       <script defer src="{% static 'js/project.js' %}"></script>
@@ -132,5 +133,15 @@
     {% block inline_javascript %}
     {# Script tags with only code, no src (defer by default) #}
     {% endblock inline_javascript %}
+
+
+    {# Footer   #}
+    <footer class="footer">
+      <div class="container">
+        {% block footer_content %}
+          Tom
+        {% endblock footer_content %}
+      </div>
+    </footer>
   </body>
 </html>

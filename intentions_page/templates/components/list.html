@@ -3,9 +3,7 @@
     <div class="intention_list">
       {% if intentions %}
         {% for intention in intentions %}
-              <div>
-                  {% include "components/single_intention.html" %}
-              </div>
+            {% include "components/single_intention.html" %}
           {% endfor %}
     {% else %}
     No intentions

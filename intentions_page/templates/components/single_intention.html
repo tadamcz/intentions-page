@@ -1,4 +1,4 @@
-<div class="intention" status="{{ intention.get_status }}">
+<div class="intention" status="{{ intention.get_status }}" id="intention{{ intention.id }}">
 <form method="post" action="edit/{{ intention.id }}" onchange="this.submit()">
     {% csrf_token %}
 
@@ -13,7 +13,7 @@
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton{{ intention.id }}">
             {% if intention.get_status != 'completed' %}
-                <label class="nevermind dropdown-item">
+                <label class="nevermind_button dropdown-item">
                     {% if intention.get_status == 'neverminded'%}
                         Un-nevermind
                     {% elif intention.get_status == 'active' %}
