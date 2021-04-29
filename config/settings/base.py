@@ -266,6 +266,7 @@ ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_ADAPTER = "intentions_page.users.adapters.AccountAdapter"
 SOCIALACCOUNT_ADAPTER = "intentions_page.users.adapters.SocialAccountAdapter"
 ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
 # Use email in place of username
 ACCOUNT_EMAIL_REQUIRED = True
