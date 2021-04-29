@@ -179,4 +179,28 @@ Mousetrap.bind('?', function (e) {
     $('#keyboardShortcutModal').modal('toggle')
 })
 
+$("#feedbackForm").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    var url = form.attr('action');
+
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               console.log('s')
+               $('#feedbackCallback').text('Success. Thanks for the feedback.').css('color','green')
+           },
+           error: function(data){
+               console.log('f')
+               $('#feedbackCallback').text('Failed. Try emailing me instead: tmkadamcz@gmail.com').css('color','red')
+           }
+         });
 });
+
+
+}); // JQuery Close

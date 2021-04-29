@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
+from django.http import HttpResponse
 
 def home(request):
     if request.user.is_authenticated:
@@ -84,3 +86,24 @@ def append(request, primary_key):
         intention.save()
 
     return redirect(request.headers.get('Referer', 'home'))
+
+def feedback(request):
+    email = request.POST.get("email")
+    message = request.POST.get("message")
+    message = message.replace('\n','<br>')
+    path = request.path
+
+    html = f"<html>" \
+           f"<br><b>path: </b>{path}" \
+           f"<br><b>email: </b>{email}" \
+           f"<br><b>message: </b>{message}" \
+           f"</html>"
+
+    result = send_mail("Feedback on intentions.page", message, recipient_list=['tmkadamcz@gmail.com'],html_message=html, from_email=email)
+
+    if result is 1:
+        return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=500)
+
+
