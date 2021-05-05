@@ -41,7 +41,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="append/{{ intention.id }}">
+      <form method="post" action="append/{{ intention.id }}" class="form-disable-on-submit">
         <div class="modal-body">
             {% csrf_token %}
             <input type="text" name="append" class="append_field form-control">

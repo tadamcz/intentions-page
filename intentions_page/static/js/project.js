@@ -1,6 +1,15 @@
 // JQuery
 $(document).ready(function() {
 
+$(".form-disable-on-submit").on('submit', function (event){
+
+var form = event.target
+var submitButton = $(form).find("button[type='submit']")
+submitButton.attr('disabled',true)
+submitButton.text('Wait...')
+
+})
+
 function refreshAt(hours, minutes, seconds) { // https://stackoverflow.com/a/1217945/
     var now = new Date();
     var then = new Date();

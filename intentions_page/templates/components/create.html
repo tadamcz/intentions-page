@@ -1,15 +1,9 @@
 <div class="create_intention">
-<form action="{% url 'create' %}" method="post" style="width: 100%" onsubmit="disableForm(this)">
+<form action="{% url 'create' %}" method="post" style="width: 100%" class="form-disable-on-submit">
     {% csrf_token %}
     <div class="d-flex">
         <input style="width: 100%" class="form-control mr-1 mr-sm-2" name="title" id="title" required placeholder="Add an intention"/>
-        <button id="submitButton" class="btn btn-md btn-primary">Submit</button>
+        <button type="submit" class="btn btn-md btn-primary">Submit</button>
     </div>
 </form>
-  <script>
-    function disableForm(form){
-      form.submitButton.disabled = true;
-      form.submitButton.innerText = "Wait...";
-    }
-  </script>
 </div>
