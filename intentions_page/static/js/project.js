@@ -1,21 +1,22 @@
 // JQuery
 $(document).ready(function() {
 
+// Avoid multiple form submissions by disabling forms on submit
 $(".form-disable-on-submit").on('submit', function (event){
-
-var form = event.target
-var submitButton = $(form).find("button[type='submit']")
-submitButton.attr('disabled',true)
-submitButton.text('Wait...')
-
+    var form = event.target
+    var submitButton = $(form).find("button[type='submit']")
+    submitButton.attr('disabled',true)
+    submitButton.text('Wait...')
 })
 
+// Cmd-Enter to submit on multi-line form
 $('.create_intention form').keydown(function(event) {
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
       $(this).submit();
     }
 })
 
+// uses third-party 'autosize' library
 autosize($('.create_intention textarea'));
 
 
@@ -44,6 +45,7 @@ function refreshIfReady(){
 }
 setTimeout(function(){refreshIfReady()}, 10*60*1000); //refresh every 10 minutes
 
+// Handle keyboard focus on intentions
 function getFocusFromLocalStorage() {
     var keyboard_nav_active = localStorage.getItem('keyboard_nav_active')
 
@@ -60,7 +62,6 @@ function getFocusFromLocalStorage() {
 
 getFocusFromLocalStorage()
 
-
 function getNextIntention(has_focus) {
     var found = false
     $('.intention').each( function (){
@@ -73,7 +74,6 @@ function getNextIntention(has_focus) {
     )
     return found
 }
-
 
 function getPrevIntention(has_focus) {
     var found = false
@@ -95,16 +95,14 @@ function setKeyboardFocus(intention){
     localStorage.setItem('keyboard_nav_active','1')
 }
 
-// Mousetrap
+// Bind shortcuts using 'Moustrap' library
 Mousetrap.bind('t', function (e){
     window.location.assign('/')
 })
 
-
 Mousetrap.bind('h', function (e){
     window.location.assign('/history')
 })
-
 
 Mousetrap.bind('j', function(e) {
     var has_focus = $('.intention_list').find('[has_keyboard_focus]')
@@ -113,7 +111,6 @@ Mousetrap.bind('j', function(e) {
         has_focus = getFocusFromLocalStorage()
     }
 
-    console.log(has_focus)
     if (has_focus.length) {
         var next = getNextIntention(has_focus)
         if (next.length) {
@@ -197,6 +194,7 @@ Mousetrap.bind('?', function (e) {
     $('#keyboardShortcutModal').modal('toggle')
 })
 
+// Feedback form
 $("#feedbackForm").submit(function(e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -210,11 +208,9 @@ $("#feedbackForm").submit(function(e) {
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-               console.log('s')
                $('#feedbackCallback').text('Success. Thanks for the feedback.').css('color','green')
            },
            error: function(data){
-               console.log('f')
                $('#feedbackCallback').text('Failed. Try emailing me instead: tmkadamcz@gmail.com').css('color','red')
            }
          });

@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from intentions_page.models import get_working_day_date
 
+
 def home(request):
     if request.user.is_authenticated:
         working_day_date = get_working_day_date()
