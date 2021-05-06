@@ -10,6 +10,15 @@ submitButton.text('Wait...')
 
 })
 
+$('.create_intention form').keydown(function(event) {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
+      $(this).submit();
+    }
+})
+
+autosize($('.create_intention textarea'));
+
+
 function refreshAt(hours, minutes, seconds) { // https://stackoverflow.com/a/1217945/
     var now = new Date();
     var then = new Date();
@@ -29,7 +38,7 @@ function refreshAt(hours, minutes, seconds) { // https://stackoverflow.com/a/121
 refreshAt(0,0,1); // refresh the page at midnight
 
 function refreshIfReady(){
-    if (!$('body').hasClass('modal-open') && !$('.create_intention input#title').val()) {
+    if (!$('body').hasClass('modal-open') && !$('#intentionCreateField').val()) {
     window.location.reload()
     }
 }
@@ -137,7 +146,7 @@ Mousetrap.bind('k', function(e) {
 })
 
 Mousetrap.bind('n', function (e){
-    $('.create_intention input#title').focus()
+    $('#intentionCreateField').focus()
     e.preventDefault()
 })
 
@@ -153,9 +162,9 @@ Mousetrap.bind('esc', function (e) {
     }
 })
 
-var create_form = $('.create_intention form').get(0)
-Mousetrap(create_form).bind('esc', function (e){ // override above binding of 'esc' for this specific case
-    $(create_form).find('input').blur()
+var create_field = $('#intentionCreateField').get(0)
+Mousetrap(create_field).bind('esc', function (e){ // override above binding of 'esc' for this specific case
+    $(create_field).blur()
 })
 
 Mousetrap.bind(['space','x'], function (e) {
