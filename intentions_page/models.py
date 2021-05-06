@@ -4,9 +4,17 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+def get_working_day_date():
+    datetime = timezone.now()
+    next_day_starts_at = 4
+    if datetime.hour < next_day_starts_at:
+        return datetime.date() - timezone.timedelta(days=1)
+    else:
+        return datetime.date()
+
 class Intention(models.Model):
     title = models.CharField(max_length=500)
-    date = models.DateField(default=timezone.now)
+    date = models.DateField(default=get_working_day_date)
     created_datetime = models.DateTimeField(default=timezone.now)
 
     creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -27,3 +35,4 @@ class Intention(models.Model):
             return 'neverminded'
         else:
             return 'active'
+

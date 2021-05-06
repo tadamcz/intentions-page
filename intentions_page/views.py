@@ -7,21 +7,24 @@ from django.contrib.auth import get_user
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import HttpResponse
+from intentions_page.models import get_working_day_date
 
 def home(request):
     if request.user.is_authenticated:
-        today = timezone.now().date()
-        intentions = Intention.objects.filter(creator=request.user, date=today)
+        working_day_date = get_working_day_date()
+
+        intentions = Intention.objects.filter(creator=request.user, date=working_day_date)
         for i in intentions:
             i.edit_form = IntentionEditForm(instance=i)
 
         context = {
-            'date': today,
+            'date': working_day_date,
             'intentions': intentions
         }
         return render(request, 'pages/home.html', context)
     else:
         return render(request, 'pages/welcome.html')
+
 
 @login_required
 def history(request):
@@ -54,8 +57,11 @@ def history(request):
 @login_required
 def create(request):
     if request.method == 'POST':
-        title = request.POST['title']
-        Intention.objects.create(title=title, creator=request.user)
+        intentions = request.POST['list'].splitlines()
+        intentions.reverse()
+        for i in intentions:
+            if not i.isspace() and not i == "":
+                Intention.objects.create(title=i, creator=request.user)
 
     return redirect('home')
 
@@ -87,10 +93,11 @@ def append(request, primary_key):
 
     return redirect(request.headers.get('Referer', 'home'))
 
+
 def feedback(request):
     email = request.POST.get("email")
     message = request.POST.get("message")
-    message = message.replace('\n','<br>')
+    message = message.replace('\n', '<br>')
     path = request.path
 
     html = f"<html>" \
@@ -99,11 +106,9 @@ def feedback(request):
            f"<br><b>message: </b>{message}" \
            f"</html>"
 
-    result = send_mail("Feedback on intentions.page", message, recipient_list=['tmkadamcz@gmail.com'],html_message=html, from_email=email)
+    result = send_mail("Feedback on intentions.page", message, recipient_list=['tmkadamcz@gmail.com'], html_message=html, from_email=email)
 
     if result is 1:
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=500)
-
-
