@@ -20,24 +20,6 @@ $('.create_intention form').keydown(function(event) {
 autosize($('.create_intention textarea'));
 
 
-function refreshAt(hours, minutes, seconds) { // https://stackoverflow.com/a/1217945/
-    var now = new Date();
-    var then = new Date();
-
-    if(now.getHours() > hours ||
-       (now.getHours() === hours && now.getMinutes() > minutes) ||
-        now.getHours() === hours && now.getMinutes() === minutes && now.getSeconds() >= seconds) {
-        then.setDate(now.getDate() + 1);
-    }
-    then.setHours(hours);
-    then.setMinutes(minutes);
-    then.setSeconds(seconds);
-
-    var timeout = (then.getTime() - now.getTime());
-    setTimeout(function() { window.location.reload(true); }, timeout);
-}
-refreshAt(0,0,1); // refresh the page at midnight
-
 function refreshIfReady(){
     if (!$('body').hasClass('modal-open') && !$('#intentionCreateField').val()) {
     window.location.reload()
