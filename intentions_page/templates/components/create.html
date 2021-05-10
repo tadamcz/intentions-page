@@ -1,7 +1,7 @@
 <div class="create_intention">
 <form action="{% url 'create' %}" method="post" style="width: 100%" class="form-disable-on-submit">
     {% csrf_token %}
-    <div class="d-flex">
+    <div class="d-flex" style="align-items: flex-end">
       <textarea rows="1" class="form-control mr-1 mr-sm-2" name="list" id="intentionCreateField" required placeholder="Add intention(s) (one per line)"></textarea>
       <button type="submit" class="btn btn-md btn-primary">Submit</button>
     </div>
