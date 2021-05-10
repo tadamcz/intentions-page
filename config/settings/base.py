@@ -268,6 +268,20 @@ SOCIALACCOUNT_ADAPTER = "intentions_page.users.adapters.SocialAccountAdapter"
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
+INSTALLED_APPS.append('allauth.socialaccount.providers.google')
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': env('GOOGLE_OAUTH_CLIENT_ID', default=None),
+            'secret': env('GOOGLE_OAUTH_SECRET', default=None),
+        }
+    }
+}
+
 # Use email in place of username
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
