@@ -30,6 +30,10 @@ EMAIL_BACKEND = env(
     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
 )
 
+# On the terminal, run: `python -m smtpd -n -c DebuggingServer localhost:1025`
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#prerequisites
