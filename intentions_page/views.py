@@ -113,3 +113,6 @@ def feedback(request):
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=500)
+
+def privacy_policy(request):
+    return render(request, "privacy-policy.html")
