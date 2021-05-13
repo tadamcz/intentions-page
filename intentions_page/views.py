@@ -140,7 +140,7 @@ def feedback(request):
 
     result = send_mail("Feedback on intentions.page", message, recipient_list=['tmkadamcz@gmail.com'], html_message=html, from_email=email)
 
-    if result is 1:
+    if result == 1:
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=500)
