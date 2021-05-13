@@ -8,6 +8,6 @@ urlpatterns = [
     path("append/<int:primary_key>", views.append, name='append'),
     path("history", views.history, name='history'),
     path("feedback", views.feedback, name='feedback'),
-    path("privacy-policy", views.privacy_policy),
+    path("privacy-policy", views.privacy_policy, name='privacy-policy'),
     path("note/<int:primary_key>", views.note),
 ]

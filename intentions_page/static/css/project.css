@@ -168,3 +168,7 @@ textarea {
   height: 1.5rem;
   vertical-align: bottom;
 }
+
+#privacyPolicyLink {
+  color: black;
+}
