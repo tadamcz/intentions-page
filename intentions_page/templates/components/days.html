@@ -1,0 +1,32 @@
+{% load crispy_forms_tags %}
+{% for date,values in content_by_date.items %}
+<div class="day">
+      <h4>Intentions for {{ date|date:"l j F Y"}}</h4>
+      <div class="intention_list">
+        {% if values.intentions %}
+          {% for intention in values.intentions %}
+              {% include "components/single_intention.html" %}
+            {% endfor %}
+      {% else %}
+      No intentions
+      {% endif %}
+      </div>
+
+
+  <div class="noteAccordion">
+    <div class="notesLink btn btn-outline-secondary" data-toggle="collapse" href="#collapseNotes{{ values.note.id }}">
+        <span>Notes</span>
+    </div>
+    <div id="collapseNotes{{ values.note.id }}" class="collapse collapseNotes">
+      <div class="">
+          <form method="post" action="note/{{ values.note.id }}" class="notesEditForm" id="noteEditForm{{ values.note.id }}">
+            {% csrf_token %}
+            {{ values.note.edit_form.content|as_crispy_field }}
+            <input type="hidden" name="version" value="{{ values.note.version }}">
+          <span class="notesFieldSaveCallback">Autosaved</span>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

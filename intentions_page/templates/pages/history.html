@@ -2,14 +2,7 @@
 {% block title %}intentions.page history{% endblock %}
 
 {% block content %}
-    {% if intentions_by_date %}
-        {% for date,intentions in intentions_by_date.items %}
-            {% include "components/list.html" %}
-        {% endfor %}
-    {% else %}
-    No intentions
-    {% endif %}
-
+    {% include "components/days.html" %}
 {% endblock %}
 {% block footer_content %}
 {% include "components/shortcuts_help.html" %}

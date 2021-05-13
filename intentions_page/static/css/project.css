@@ -62,10 +62,10 @@ input[name="neverminded"] {
   margin: 0;
 }
 
-.intention_day {
+.day {
     margin-bottom: 1em;
 }
-.intention_list, .create_intention {
+.intention_list, .create_intention, .noteAccordion {
     max-width: 30em;
 }
 
@@ -125,4 +125,24 @@ html, body {
 
 .footer .container > *{
   margin-right: 1em;
+}
+
+.noteAccordion {
+  border: none;
+}
+
+.notesLink{
+  cursor: pointer;
+  border: none; /* override boostrap default button look */
+}
+
+textarea {
+  resize: both; /* override bootstrap default */
+}
+.notesFieldSaveCallback {
+  font-size: smaller;
+  color: grey;
+}
+.notesEditForm .form-group {
+  margin-bottom: 0;
 }

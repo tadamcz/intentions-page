@@ -141,10 +141,15 @@ Mousetrap.bind('esc', function (e) {
     }
 })
 
-var create_field = $('#intentionCreateField').get(0)
-Mousetrap(create_field).bind('esc', function (e){ // override above binding of 'esc' for this specific case
-    $(create_field).blur()
-})
+var textareas = $('.notesEditForm textarea, .create_intention textarea').each(function (i, e) { // override above binding of 'esc' for this specific case
+        Mousetrap(e).bind('esc', function (e){
+            e.target.blur()
+        })
+
+    }
+
+)
+
 
 Mousetrap.bind(['space','x'], function (e) {
     var has_focus = $('.intention_list').find('[has_keyboard_focus]')
@@ -198,5 +203,37 @@ $("#feedbackForm").submit(function(e) {
          });
 });
 
+function SendFormAJAX(form){ // returns a function
+    return function (){
+        var versionField = form.find("input[name='version']")
+        versionField.val(function(i, oldval){
+            return parseInt(oldval)+1
+        })
+        $.ajax({
+            type: form.attr('method').toUpperCase(),
+            url: form.attr('action'),
+            data: form.serialize(),
+            beforeSend: function (){
+                form.find('.notesFieldSaveCallback').text('Autosaving...')
+            },
+            success: function (){
+                form.find('.notesFieldSaveCallback').text('Autosaved')
+            }
+      });}
+}
+
+$('.notesEditForm').each(function (index, element){
+    var form = $(element)
+    var ajaxThrottled = _.throttle(SendFormAJAX(form), 500)
+    form.on("input", ajaxThrottled)
+})
+
+$('.collapseNotes')
+    .on('shown.bs.collapse', function (){
+        $(this).find('textarea').focus()
+    })
+    .on('hidden.bs.collapse', function (){
+    $(this).find('textarea').blur()
+})
 
 }); // JQuery Close

@@ -36,3 +36,16 @@ class Intention(models.Model):
         else:
             return 'active'
 
+
+class Note(models.Model):
+    content = models.TextField()
+    date = models.DateField(default=get_working_day_date)
+    created_datetime = models.DateTimeField(default=timezone.now)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    version = models.IntegerField(default=0)  # Needed for autosaving
+
+    class Meta:
+        constraints =[models.UniqueConstraint(fields=['date','creator'],name='One note per user per day')]
+
+        ordering = ['-created_datetime']

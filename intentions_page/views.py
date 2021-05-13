@@ -1,5 +1,5 @@
-from intentions_page.forms import IntentionEditForm
-from intentions_page.models import Intention
+from intentions_page.forms import IntentionEditForm, NoteEditForm
+from intentions_page.models import Intention, Note
 import django.utils.timezone as timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -14,14 +14,10 @@ def home(request):
     if request.user.is_authenticated:
         working_day_date = get_working_day_date()
 
-        intentions = Intention.objects.filter(creator=request.user, date=working_day_date)
-        for i in intentions:
-            i.edit_form = IntentionEditForm(instance=i)
-
         context = {
-            'date': working_day_date,
-            'intentions': intentions
+            'content_by_date': create_day_range(working_day_date, working_day_date, request.user)
         }
+
         return render(request, 'pages/home.html', context)
     else:
         return render(request, 'pages/welcome.html')
@@ -29,31 +25,54 @@ def home(request):
 
 @login_required
 def history(request):
-    intentions_by_date = {}
     intentions = Intention.objects.filter(creator=request.user)
+    notes = Note.objects.filter(creator=request.user)
 
-    today = timezone.now().date()
+    end_date = get_working_day_date()
 
+    start_date_candidates = [end_date]
     if intentions:
-        start_date = intentions.last().date
-        num_days = (today - start_date).days + 1
+        start_date_candidates.append(intentions.last().date)
+    if notes:
+        start_date_candidates.append(notes.last().date)
 
-        date_range = (today - timezone.timedelta(days=x) for x in range(num_days))
+    start_date = min(start_date_candidates)
 
-        for date in date_range:
-            intentions_for_day = intentions.filter(date=date)
-
-            for i in intentions_for_day:
-                i.edit_form = IntentionEditForm(instance=i)
-
-            intentions_by_date[date] = intentions_for_day
+    day_range = create_day_range(start_date, end_date, request.user)
 
     context = {
-        'intentions_by_date': intentions_by_date
+        'content_by_date': day_range
     }
 
     return render(request, 'pages/history.html', context)
 
+def create_day(date, user):
+
+    intentions = Intention.objects.filter(creator=user, date=date)
+
+    for i in intentions:
+        i.edit_form = IntentionEditForm(instance=i)
+
+    note = Note.objects.filter(creator=user, date=date).first()
+    if not note:
+        note = Note(creator=user, date=date)
+        note.save()
+
+    note.edit_form = NoteEditForm(instance=note)
+
+    return {'intentions': intentions, 'note': note}
+
+def create_day_range(start,end,user):
+    day_range = {}
+
+    num_days = (end - start).days + 1
+
+    date_range = (end - timezone.timedelta(days=x) for x in range(num_days))
+
+    for date in date_range:
+        day_range[date] = create_day(date, user)
+
+    return day_range
 
 @login_required
 def create(request):
@@ -94,6 +113,18 @@ def append(request, primary_key):
 
     return redirect(request.headers.get('Referer', 'home'))
 
+@login_required
+def note(request, primary_key):
+    if request.method == 'POST':
+        note = Note.objects.get(id=primary_key)
+        if note.creator != get_user(request):
+            raise PermissionDenied
+        if note.version < int(request.POST['version']):
+            note.content = request.POST['content']
+            note.version = request.POST['version']
+            note.save()
+            print('saved!')
+        return HttpResponse(status=200)
 
 def feedback(request):
     email = request.POST.get("email")
