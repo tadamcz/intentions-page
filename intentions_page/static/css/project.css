@@ -73,6 +73,9 @@ input[name="neverminded"] {
 .intention_list, .create_intention, .noteAccordion {
     max-width: 30em;
 }
+.intention_list {
+  margin-bottom: 1rem;
+}
 
 
 /*Customize Bootstrap dropdown-toggle*/
