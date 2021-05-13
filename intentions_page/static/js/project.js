@@ -18,7 +18,7 @@ $('.create_intention form').keydown(function(event) {
 
 // uses third-party 'autosize' library
 autosize($('.create_intention textarea'));
-
+autosize($('.notesEditForm textarea'))
 
 function refreshIfReady(){
     if (!$('body').hasClass('modal-open') && !$('#intentionCreateField').val()) {
