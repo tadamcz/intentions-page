@@ -1,0 +1,29 @@
+<script>
+window.addEventListener('load', function() { // wait for JQuery to have loaded with defer
+
+function refreshIfReady(){
+    if (
+            !$('body').hasClass('modal-open') &&
+            !$('#intentionCreateField').val() &&
+            !$('textarea').is(":focus")
+    ) {
+        $.ajax({
+           type: "GET",
+           url: window.location,
+           success: function(data)
+           {
+               // parses the string into an array of DOM nodes
+               nodes = $.parseHTML(data, keepScripts=true)
+
+
+               // re-writes the page
+               $("#page_wrapper").replaceWith($(nodes).filter('#page_wrapper'))
+
+           },
+         });
+    }
+}
+setInterval(function(){refreshIfReady()}, 2*60*1000); //refresh every n minutes
+
+})
+</script>

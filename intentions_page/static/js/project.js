@@ -20,12 +20,7 @@ $('.create_intention form').keydown(function(event) {
 autosize($('.create_intention textarea'));
 autosize($('.notesEditForm textarea'))
 
-function refreshIfReady(){
-    if (!$('body').hasClass('modal-open') && !$('#intentionCreateField').val()) {
-    window.location.reload()
-    }
-}
-setTimeout(function(){refreshIfReady()}, 10*60*1000); //refresh every 10 minutes
+
 
 // Handle keyboard focus on intentions
 function getFocusFromLocalStorage() {
