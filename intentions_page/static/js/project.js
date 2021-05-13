@@ -1,5 +1,5 @@
 // JQuery
-$(document).ready(function() {
+function doThisOnDocumentReady(){
 
 // Avoid multiple form submissions by disabling forms on submit
 $(".form-disable-on-submit").on('submit', function (event){
@@ -231,4 +231,6 @@ $('.collapseNotes')
     $(this).find('textarea').blur()
 })
 
-}); // JQuery Close
+} // close doThisOnDocumentReady
+
+$(document).ready(doThisOnDocumentReady)

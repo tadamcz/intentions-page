@@ -19,6 +19,8 @@ function refreshIfReady(){
                // re-writes the page
                $("#page_wrapper").replaceWith($(nodes).filter('#page_wrapper'))
 
+               doThisOnDocumentReady()
+
            },
          });
     }
