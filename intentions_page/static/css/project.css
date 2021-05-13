@@ -61,6 +61,11 @@ input[name="neverminded"] {
   height: 100%;
   margin: 0;
 }
+.intention_buttons .dropdown-toggle, .intention_title {
+  /*Arcane issue: must make sure these are the same so that .intention_title is clickable where we expect */
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
 
 .day {
     margin-bottom: 1em;
