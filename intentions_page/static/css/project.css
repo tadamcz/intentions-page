@@ -146,3 +146,17 @@ textarea {
 .notesEditForm .form-group {
   margin-bottom: 0;
 }
+
+.login-or {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.socialaccount_providers li {
+  list-style: none;
+}
+.socialaccount_logo {
+  height: 1.5rem;
+  vertical-align: bottom;
+}
