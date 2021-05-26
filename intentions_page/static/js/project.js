@@ -223,13 +223,6 @@ $('.notesEditForm').each(function (index, element){
     form.on("input", ajaxThrottled)
 })
 
-$('.collapseNotes')
-    .on('shown.bs.collapse', function (){
-        $(this).find('textarea').focus()
-    })
-    .on('hidden.bs.collapse', function (){
-    $(this).find('textarea').blur()
-})
 
 } // close doThisOnDocumentReady
 
