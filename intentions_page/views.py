@@ -13,20 +13,10 @@ from intentions_page.models import get_working_day_date
 def home(request):
     if request.user.is_authenticated:
         working_day_date = get_working_day_date()
-
         tomorrow_date = working_day_date + timezone.timedelta(days=1)
 
-        tomorrow_draft = IntentionsDraft.objects.filter(creator=request.user, date=tomorrow_date).first()
-        if not tomorrow_draft:
-            tomorrow_draft = IntentionsDraft(creator=request.user, date=tomorrow_date)
-            tomorrow_draft.save()
-        tomorrow_draft_field = IntentionsDraftEditForm(instance=tomorrow_draft)
-
-        today_draft = IntentionsDraft.objects.filter(creator=request.user, date=working_day_date).first()
-        if not today_draft:
-            today_draft = IntentionsDraft(creator=request.user, date=working_day_date)
-            today_draft.save()
-        today_draft_field = IntentionsDraftEditForm(instance=today_draft)
+        tomorrow_draft_field = get_or_init_intentions_draft_field(request.user, tomorrow_date)
+        today_draft_field = get_or_init_intentions_draft_field(request.user, working_day_date)
 
         context = {
             'content_by_date': create_day_range(working_day_date, working_day_date, request.user),
@@ -38,6 +28,12 @@ def home(request):
     else:
         return render(request, 'pages/welcome.html')
 
+def get_or_init_intentions_draft_field(user, date):
+    draft = IntentionsDraft.objects.filter(creator=user, date=date).first()
+    if not draft:
+        draft = IntentionsDraft(creator=user, date=date)
+        draft.save()
+    return IntentionsDraftEditForm(instance=draft)
 
 @login_required
 def history(request):
@@ -137,27 +133,22 @@ def append(request, primary_key):
 def note(request, primary_key):
     if request.method == 'POST':
         note = Note.objects.get(id=primary_key)
-        if note.creator != get_user(request):
-            raise PermissionDenied
-        if note.version < int(request.POST['version']):
-            note.content = request.POST['content']
-            note.version = request.POST['version']
-            note.save()
-            print('saved!')
-        return HttpResponse(status=200)
+        return autosave_field(request, note)
 
 @login_required
 def intentions_draft(request, primary_key):
     if request.method == 'POST':
         draft = IntentionsDraft.objects.get(id=primary_key)
-        if draft.creator != get_user(request):
-            raise PermissionDenied
-        if draft.version < int(request.POST['version']):
-            draft.content = request.POST['content']
-            draft.version = request.POST['version']
-            draft.save()
-            print('saved!')
-        return HttpResponse(status=200)
+        return autosave_field(request, draft)
+
+def autosave_field(request, object):
+    if object.creator != get_user(request):
+        raise PermissionDenied
+    if object.version < int(request.POST['version']):
+        object.content = request.POST['content']
+        object.version = request.POST['version']
+        object.save()
+    return HttpResponse(status=200)
 
 def feedback(request):
     email = request.POST.get("email")
