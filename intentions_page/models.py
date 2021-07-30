@@ -36,6 +36,15 @@ class Intention(models.Model):
         else:
             return 'active'
 
+class IntentionsDraft(models.Model):
+    content = models.TextField()
+    date = models.DateField(default=get_working_day_date)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created_datetime = models.DateTimeField(default=timezone.now)
+    version = models.IntegerField(default=0)  # Needed for autosaving
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['date', 'creator'], name='One intentions draft per user per day')]
 
 class Note(models.Model):
     content = models.TextField()

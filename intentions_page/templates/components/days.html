@@ -23,7 +23,7 @@
             {% csrf_token %}
             {{ values.note.edit_form.content|as_crispy_field }}
             <input type="hidden" name="version" value="{{ values.note.version }}">
-          <span class="notesFieldSaveCallback">Autosaved</span>
+          <span class="fieldSaveCallback">Autosaved</span>
           </form>
       </div>
     </div>

@@ -1,9 +1,15 @@
+{% load crispy_forms_tags %}
+
 <div class="create_intention">
-<form action="{% url 'create' %}" method="post" style="width: 100%" class="form-disable-on-submit">
+<form method="post" action="intentions_draft/{{ today_draft_field.instance.id }}" class="todayEditForm mr-1 mr-sm-2" id="todayEditForm" style="width: 100%">
     {% csrf_token %}
-    <div class="d-flex" style="align-items: flex-end">
-      <textarea rows="1" class="form-control mr-1 mr-sm-2" name="list" id="intentionCreateField" required placeholder="Add intention(s) (one per line)"></textarea>
-      <button type="submit" class="btn btn-md btn-primary">Submit</button>
-    </div>
+    {{ today_draft_field.content|as_crispy_field }}
+  <input type="hidden" name="version" value="{{ today_draft_field.instance.version }}">
+  <span class="fieldSaveCallback">Autosaved</span>
+</form>
+
+<form action="{% url 'promote_draft_to_intentions' %}" method="post" class="form-disable-on-submit" style="flex-shrink: 0; flex-grow: 0" id="promote_draft_to_intentions_form">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-md btn-primary">Submit</button>
 </form>
 </div>

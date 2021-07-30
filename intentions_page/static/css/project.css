@@ -18,7 +18,6 @@
 
 .create_intention {
     display: flex;
-    align-items: center;
     margin-top: 1em;
     margin-bottom: 1em;
 }
@@ -70,7 +69,7 @@ input[name="neverminded"] {
 .day {
     margin-bottom: 1em;
 }
-.intention_list, .create_intention, .noteAccordion {
+.intention_list, .create_intention, .noteAccordion, .tomorrowEditAccordion {
     max-width: 30em;
 }
 .intention_list {
@@ -147,7 +146,7 @@ html, body {
 textarea {
   resize: both; /* override bootstrap default */
 }
-.notesFieldSaveCallback {
+.fieldSaveCallback {
   font-size: smaller;
   color: grey;
 }

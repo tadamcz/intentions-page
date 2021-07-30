@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+<div class="tomorrowEditAccordion">
+    <div class="tomorrowEditLink btn btn-outline-secondary" data-toggle="collapse" href="#collapseTomorrowEdit">
+        <span>Tomorrow</span>
+    </div>
+    <div id="collapseTomorrowEdit" class="collapse collapseTomorrowEdit">
+      <div class="">
+          <form method="post" action="intentions_draft/{{ tomorrow_draft_field.instance.id }}" class="tomorrowEditForm" id="tomorrowEditForm">
+            {% csrf_token %}
+            {{ tomorrow_draft_field.content|as_crispy_field }}
+            <input type="hidden" name="version" value="{{ tomorrow_draft_field.instance.version }}">
+          <span class="fieldSaveCallback">Autosaved</span>
+          </form>
+      </div>
+    </div>
+  </div>

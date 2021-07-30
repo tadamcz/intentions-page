@@ -19,6 +19,7 @@ $('.create_intention form').keydown(function(event) {
 // uses third-party 'autosize' library
 autosize($('.create_intention textarea'));
 autosize($('.notesEditForm textarea'))
+autosize($('.tomorrowEditForm textarea'))
 
 
 
@@ -209,20 +210,27 @@ function SendFormAJAX(form){ // returns a function
             url: form.attr('action'),
             data: form.serialize(),
             beforeSend: function (){
-                form.find('.notesFieldSaveCallback').text('Autosaving...')
+                form.find('.fieldSaveCallback').text('Autosaving...')
             },
             success: function (){
-                form.find('.notesFieldSaveCallback').text('Autosaved')
+                form.find('.fieldSaveCallback').text('Autosaved')
             }
       });}
 }
 
-$('.notesEditForm').each(function (index, element){
+$('.notesEditForm, .tomorrowEditForm, .todayEditForm').each(function (index, element){
     var form = $(element)
     var ajaxThrottled = _.throttle(SendFormAJAX(form), 500)
     form.on("input", ajaxThrottled)
 })
 
+$('.todayEditForm').keydown(function (e){ // We need to catch Cmd/Ctrl+Enter on the intention creation form
+    if ((e.ctrlKey || e.metaKey) && (e.keyCode == 13 || e.keyCode == 10)) { // Key codes 13 and 10 represent the enter key
+     e.preventDefault()
+     $('#promote_draft_to_intentions_form').submit()
+    }
+    }
+)
 
 } // close doThisOnDocumentReady
 

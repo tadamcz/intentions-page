@@ -1,5 +1,5 @@
-from intentions_page.forms import IntentionEditForm, NoteEditForm
-from intentions_page.models import Intention, Note
+from intentions_page.forms import IntentionEditForm, NoteEditForm, IntentionsDraftEditForm
+from intentions_page.models import Intention, Note, IntentionsDraft
 import django.utils.timezone as timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -14,8 +14,24 @@ def home(request):
     if request.user.is_authenticated:
         working_day_date = get_working_day_date()
 
+        tomorrow_date = working_day_date + timezone.timedelta(days=1)
+
+        tomorrow_draft = IntentionsDraft.objects.filter(creator=request.user, date=tomorrow_date).first()
+        if not tomorrow_draft:
+            tomorrow_draft = IntentionsDraft(creator=request.user, date=tomorrow_date)
+            tomorrow_draft.save()
+        tomorrow_draft_field = IntentionsDraftEditForm(instance=tomorrow_draft)
+
+        today_draft = IntentionsDraft.objects.filter(creator=request.user, date=working_day_date).first()
+        if not today_draft:
+            today_draft = IntentionsDraft(creator=request.user, date=working_day_date)
+            today_draft.save()
+        today_draft_field = IntentionsDraftEditForm(instance=today_draft)
+
         context = {
-            'content_by_date': create_day_range(working_day_date, working_day_date, request.user)
+            'content_by_date': create_day_range(working_day_date, working_day_date, request.user),
+            'tomorrow_draft_field':tomorrow_draft_field,
+            'today_draft_field':today_draft_field,
         }
 
         return render(request, 'pages/home.html', context)
@@ -75,13 +91,17 @@ def create_day_range(start,end,user):
     return day_range
 
 @login_required
-def create(request):
-    if request.method == 'POST':
-        intentions = request.POST['list'].splitlines()
-        intentions.reverse()
-        for i in intentions:
-            if not i.isspace() and not i == "":
+def promote_draft_to_intentions(request):
+    draft = IntentionsDraft.objects.filter(creator=request.user, date=get_working_day_date()).first()
+
+    intentions = draft.content.splitlines()
+    intentions.reverse()
+    for i in intentions:
+        if not i.isspace() and not i == "":
                 Intention.objects.create(title=i, creator=request.user)
+
+    draft.content = ''
+    draft.save()
 
     return redirect('home')
 
@@ -123,6 +143,19 @@ def note(request, primary_key):
             note.content = request.POST['content']
             note.version = request.POST['version']
             note.save()
+            print('saved!')
+        return HttpResponse(status=200)
+
+@login_required
+def intentions_draft(request, primary_key):
+    if request.method == 'POST':
+        draft = IntentionsDraft.objects.get(id=primary_key)
+        if draft.creator != get_user(request):
+            raise PermissionDenied
+        if draft.version < int(request.POST['version']):
+            draft.content = request.POST['content']
+            draft.version = request.POST['version']
+            draft.save()
             print('saved!')
         return HttpResponse(status=200)
 
