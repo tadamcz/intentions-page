@@ -13,13 +13,13 @@
       </div>
 
 
-  <div class="noteAccordion">
+  <div class="notes-accordion">
     <div class="notesLink btn btn-outline-secondary" data-toggle="collapse" href="#collapseNotes{{ values.note.id }}">
         <span>Notes</span>
     </div>
     <div id="collapseNotes{{ values.note.id }}" class="collapse collapseNotes">
       <div class="">
-          <form method="post" action="note/{{ values.note.id }}" class="notesEditForm" id="noteEditForm{{ values.note.id }}">
+          <form method="post" action="note/{{ values.note.id }}" class="notes-edit-form" id="noteEditForm{{ values.note.id }}">
             {% csrf_token %}
             {{ values.note.edit_form.content|as_crispy_field }}
             <input type="hidden" name="version" value="{{ values.note.version }}">

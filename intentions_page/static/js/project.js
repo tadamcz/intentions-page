@@ -9,17 +9,19 @@ $(".form-disable-on-submit").on('submit', function (event){
     submitButton.text('Wait...')
 })
 
-// Cmd-Enter to submit on multi-line form
-$('.create_intention form').keydown(function(event) {
+// Cmd-Enter to submit on today's intentions draft
+// Notice that we don't submit on the form that received the shortcut, we submit promote_draft_to_intentions_form.
+today_intentions_draft = $('.today-intentions-draft')
+today_intentions_draft.find('.intentions-draft-form').keydown(function(event) {
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
-      $(this).submit();
+      today_intentions_draft.find('#promote_draft_to_intentions_form').submit();
     }
 })
 
 // uses third-party 'autosize' library
-autosize($('.create_intention textarea'));
-autosize($('.notesEditForm textarea'))
-autosize($('.tomorrowEditForm textarea'))
+autosize($('.today-intentions-draft textarea'));
+autosize($('.tomorrow-intentions-draft textarea'))
+autosize($('.notes-edit-form textarea'))
 
 
 
@@ -137,7 +139,7 @@ Mousetrap.bind('esc', function (e) {
     }
 })
 
-var textareas = $('.notesEditForm textarea, .create_intention textarea').each(function (i, e) { // override above binding of 'esc' for this specific case
+var textareas = $('.notes-edit-form textarea, .today-intentions-draft textarea').each(function (i, e) { // override above binding of 'esc' for this specific case
         Mousetrap(e).bind('esc', function (e){
             e.target.blur()
         })
@@ -218,19 +220,11 @@ function SendFormAJAX(form){ // returns a function
       });}
 }
 
-$('.notesEditForm, .tomorrowEditForm, .todayEditForm').each(function (index, element){
+$('.notes-edit-form, .intentions-draft-form').each(function (index, element){
     var form = $(element)
     var ajaxThrottled = _.throttle(SendFormAJAX(form), 500)
     form.on("input", ajaxThrottled)
 })
-
-$('.todayEditForm').keydown(function (e){ // We need to catch Cmd/Ctrl+Enter on the intention creation form
-    if ((e.ctrlKey || e.metaKey) && (e.keyCode == 13 || e.keyCode == 10)) { // Key codes 13 and 10 represent the enter key
-     e.preventDefault()
-     $('#promote_draft_to_intentions_form').submit()
-    }
-    }
-)
 
 } // close doThisOnDocumentReady
 

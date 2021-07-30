@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+<form method="post" action="intentions_draft/{{ draft_field.instance.id }}" class="intentions-draft-form mr-1 mr-sm-2">
+    {% csrf_token %}
+    {{ draft_field.content|as_crispy_field }}
+  <input type="hidden" name="version" value="{{ draft_field.instance.version }}">
+  <span class="fieldSaveCallback">Autosaved</span>
+</form>

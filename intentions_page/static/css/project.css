@@ -16,10 +16,14 @@
     margin: .5em;
 }
 
-.create_intention {
+.today-intentions-draft {
     display: flex;
     margin-top: 1em;
     margin-bottom: 1em;
+}
+
+.today-intentions-draft .intentions-draft-form {
+  width: 100%;
 }
 
 .intention[status='completed'] .intention_title {
@@ -69,7 +73,7 @@ input[name="neverminded"] {
 .day {
     margin-bottom: 1em;
 }
-.intention_list, .create_intention, .noteAccordion, .tomorrowEditAccordion {
+.intention_list, .today-intentions-draft, .notes-accordion, .tomorrow-intentions-draft-accordion {
     max-width: 30em;
 }
 .intention_list {
@@ -134,7 +138,7 @@ html, body {
   margin-right: 1em;
 }
 
-.noteAccordion {
+.notes-accordion {
   border: none;
 }
 
@@ -150,7 +154,7 @@ textarea {
   font-size: smaller;
   color: grey;
 }
-.notesEditForm .form-group {
+.notes-edit-form .form-group {
   margin-bottom: 0;
 }
 
