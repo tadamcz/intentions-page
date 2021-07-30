@@ -211,12 +211,7 @@ function SendFormAJAX(form){ // returns a function
             type: form.attr('method').toUpperCase(),
             url: form.attr('action'),
             data: form.serialize(),
-            beforeSend: function (){
-                form.find('.fieldSaveCallback').text('Autosaving...')
-            },
-            success: function (){
-                form.find('.fieldSaveCallback').text('Autosaved')
-            }
+
       });}
 }
 

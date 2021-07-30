@@ -3,5 +3,4 @@
     {% csrf_token %}
     {{ draft_field.content|as_crispy_field }}
   <input type="hidden" name="version" value="{{ draft_field.instance.version }}">
-  <span class="fieldSaveCallback">Autosaved</span>
 </form>

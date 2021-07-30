@@ -150,10 +150,7 @@ html, body {
 textarea {
   resize: both; /* override bootstrap default */
 }
-.fieldSaveCallback {
-  font-size: smaller;
-  color: grey;
-}
+
 .notes-edit-form .form-group {
   margin-bottom: 0;
 }
