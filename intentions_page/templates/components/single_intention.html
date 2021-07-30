@@ -1,5 +1,5 @@
 <div class="intention" status="{{ intention.get_status }}" id="intention{{ intention.id }}">
-<form method="post" action="edit/{{ intention.id }}" onchange="this.submit()">
+<form method="post" action="edit/{{ intention.id }}" class="intention-edit-form">
     {% csrf_token %}
 
     <label class="intention_title">

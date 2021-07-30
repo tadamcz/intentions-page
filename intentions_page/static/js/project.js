@@ -207,7 +207,7 @@ $("#feedbackForm").submit(function(e) {
          });
 });
 
-function SendFormAJAX(form){ // returns a function
+function sendAutosaveFormAJAX(form){ // returns a function
     return function (){
         var versionField = form.find("input[name='version']")
         versionField.val(function(i, oldval){
@@ -223,8 +223,62 @@ function SendFormAJAX(form){ // returns a function
 
 $('.notes-edit-form, .intentions-draft-form').each(function (index, element){
     var form = $(element)
-    var ajaxThrottled = _.throttle(SendFormAJAX(form), 500)
+    var ajaxThrottled = _.throttle(sendAutosaveFormAJAX(form), 500)
     form.on("input", ajaxThrottled)
+})
+
+$('.intention input[name=completed]').on('change', function (e) {
+    checked = $(e.target).prop('checked')
+    intention = $(e.target).closest('.intention')
+    if (checked){
+        intention.attr('status','completed')
+    }
+    else {
+        intention.attr('status','active')
+    }
+})
+
+$('.intention input[name=neverminded]').on('change', function (e) {
+    checked = $(e.target).prop('checked')
+    intention = $(e.target).closest('.intention')
+    if (checked){
+        intention.attr('status','neverminded')
+    }
+    else {
+        intention.attr('status','active')
+    }
+})
+
+
+function intentionEditAJAX(form){
+    $.ajax({
+        type: form.attr('method').toUpperCase(),
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(data)
+        {
+            // parses the string into an array of DOM nodes
+            nodes = $.parseHTML(data)
+
+           // re-writes the page
+           $('#_content').replaceWith($(nodes).find('#_content'))
+
+            // re-binds JQuery stuff
+            doThisOnDocumentReady()
+
+        },
+        error: function (data)
+        {
+            console.log(data)
+        }
+
+    });
+}
+
+$('.intention-edit-form').on('change', function (e){
+    form = $(e.target).closest('form')
+    intentionEditAJAX(form)
+    e.preventDefault()
 })
 
 } // close doThisOnDocumentReady
