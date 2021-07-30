@@ -122,8 +122,14 @@ Mousetrap.bind('k', function(e) {
     }
 })
 
-Mousetrap.bind('n', function (e){
-    $('#intentionCreateField').focus()
+Mousetrap.bind('i', function (e){
+    $('.today-intentions-draft textarea').focus()
+    e.preventDefault()
+})
+
+Mousetrap.bind('shift+i', function (e){
+    $('.tomorrow-intentions-draft-accordion .collapse').collapse('show')
+    $('.tomorrow-intentions-draft textarea').focus()
     e.preventDefault()
 })
 
@@ -139,7 +145,7 @@ Mousetrap.bind('esc', function (e) {
     }
 })
 
-var textareas = $('.notes-edit-form textarea, .today-intentions-draft textarea').each(function (i, e) { // override above binding of 'esc' for this specific case
+var textareas = $('.notes-edit-form textarea, .intentions-draft-form textarea').each(function (i, e) { // override above binding of 'esc' for this specific case
         Mousetrap(e).bind('esc', function (e){
             e.target.blur()
         })
