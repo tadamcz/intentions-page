@@ -1,4 +1,3 @@
-{% load crispy_forms_tags %}
 {% for date,values in content_by_date.items %}
 <div class="day">
       <h4>Intentions for {{ date|date:"l j F Y"}}</h4>
@@ -13,19 +12,6 @@
       </div>
 
 
-  <div class="notes-accordion">
-    <div class="notesLink btn btn-outline-secondary" data-toggle="collapse" href="#collapseNotes{{ values.note.id }}">
-        <span>Notes</span>
-    </div>
-    <div id="collapseNotes{{ values.note.id }}" class="collapse collapseNotes">
-      <div class="">
-          <form method="post" action="note/{{ values.note.id }}" class="notes-edit-form" id="noteEditForm{{ values.note.id }}">
-            {% csrf_token %}
-            {{ values.note.edit_form.content|as_crispy_field }}
-            <input type="hidden" name="version" value="{{ values.note.version }}">
-          </form>
-      </div>
-    </div>
-  </div>
+  {% include "components/notes.html" %}
 </div>
 {% endfor %}
