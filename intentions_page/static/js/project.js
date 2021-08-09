@@ -83,6 +83,7 @@ function setKeyboardFocus(intention){
     intention.attr('has_keyboard_focus', '1')
     localStorage.setItem('has_keyboard_focus',intention.attr('id'))
     localStorage.setItem('keyboard_nav_active','1')
+    intention[0].scrollIntoView()
 }
 
 // Bind shortcuts using 'Moustrap' library
