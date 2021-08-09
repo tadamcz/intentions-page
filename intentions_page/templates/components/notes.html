@@ -3,7 +3,7 @@
   <div class="notesLink btn btn-outline-secondary" data-toggle="collapse" href="#collapseNotes{{ values.note.id }}">
       <span>Notes</span>
   </div>
-  <div id="collapseNotes{{ values.note.id }}" class="collapse collapseNotes">
+  <div id="collapseNotes{{ values.note.id }}" class="collapseNotes collapse{% if not values.note.collapse %} show{% endif %}">
     <div class="">
         <form method="post" action="note/{{ values.note.id }}" class="notes-edit-form" id="noteEditForm{{ values.note.id }}">
           {% csrf_token %}

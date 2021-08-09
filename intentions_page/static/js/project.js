@@ -19,10 +19,20 @@ today_intentions_draft.find('.intentions-draft-form').keydown(function(event) {
 })
 
 // uses third-party 'autosize' library
-autosize($('.today-intentions-draft textarea'));
-autosize($('.tomorrow-intentions-draft textarea'))
-autosize($('.notes-edit-form textarea'))
+autosize_elements =
+    $('.today-intentions-draft textarea')
+        .add('.tomorrow-intentions-draft textarea')
+        .add('.notes-edit-form textarea')
 
+autosize(autosize_elements)
+autosize.update(autosize_elements)
+
+//    From autosize docs:
+//    If you want to assign Autosize to a hidden textarea element that you plan to reveal later,
+//    be sure to either specify the pixel width of the element in your CSS, or use the autosize.update method after you reveal the textarea element.
+$('.notes-accordion, .tomorrow-intentions-draft-accordion').on('shown.bs.collapse', () =>
+    autosize.update($(this).find('textarea'))
+)
 
 
 // Handle keyboard focus on intentions

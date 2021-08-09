@@ -18,8 +18,11 @@ def home(request):
         tomorrow_draft_field = get_or_init_intentions_draft_field(request.user, tomorrow_date)
         today_draft_field = get_or_init_intentions_draft_field(request.user, working_day_date)
 
+        content_by_date = create_day_range(working_day_date, working_day_date, request.user)
+        content_by_date[working_day_date]['note'].collapse = True
+
         context = {
-            'content_by_date': create_day_range(working_day_date, working_day_date, request.user),
+            'content_by_date': content_by_date,
             'tomorrow_draft_field':tomorrow_draft_field,
             'today_draft_field':today_draft_field,
         }
@@ -71,6 +74,7 @@ def create_day(date, user):
         note.save()
 
     note.edit_form = NoteEditForm(instance=note)
+    note.collapse = False
 
     return {'intentions': intentions, 'note': note}
 

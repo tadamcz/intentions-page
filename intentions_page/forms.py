@@ -1,5 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field
 
 from intentions_page.models import Intention, Note, IntentionsDraft
 
@@ -28,6 +29,10 @@ class NoteEditForm(forms.ModelForm):
 	class Meta:
 		model = Note
 		fields = ('content',)
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields['content'].widget.attrs = {'rows': 2}
 
 	helper = FormHelper()
 	helper.form_show_labels = False
