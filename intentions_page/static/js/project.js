@@ -139,7 +139,13 @@ Mousetrap.bind('i', function (e){
 
 Mousetrap.bind('shift+i', function (e){
     $('.tomorrow-intentions-draft-accordion .collapse').collapse('show')
-    $('.tomorrow-intentions-draft textarea').focus()
+    $('.tomorrow-intentions-draft-accordion textarea').focus()
+    e.preventDefault()
+})
+
+Mousetrap.bind('n', function (e){
+    $('.notes-accordion .collapse').collapse('show')
+    $('.notes-accordion textarea').focus()
     e.preventDefault()
 })
 
