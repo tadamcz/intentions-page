@@ -141,7 +141,7 @@ html, body {
   border: none;
 }
 
-.notesLink{
+.notesLink, .tomorrowEditLink{
   cursor: pointer;
   border: none; /* override boostrap default button look */
 }
