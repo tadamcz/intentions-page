@@ -93,7 +93,6 @@ def create_day_range(start,end,user):
 @login_required
 def promote_draft_to_intentions(request):
     intentions = request.POST['content'].splitlines()
-    intentions.reverse()
     for i in intentions:
         if not i.isspace() and not i == "":
                 Intention.objects.create(title=i, creator=request.user)
