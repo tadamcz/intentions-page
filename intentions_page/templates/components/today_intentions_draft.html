@@ -1,8 +1,3 @@
 <div class="today-intentions-draft">
-  {% include "components/intentions_draft.html" with draft_field=today_draft_field %}
-
-  <form action="{% url 'promote_draft_to_intentions' %}" method="post" class="form-disable-on-submit" id="promote_draft_to_intentions_form">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-md btn-primary">Submit</button>
-  </form>
+    {% include "components/intentions_draft.html" with draft_field=today_draft_field submit_button=True %}
 </div>

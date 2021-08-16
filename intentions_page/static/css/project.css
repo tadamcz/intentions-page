@@ -16,13 +16,17 @@
     margin: .5em;
 }
 
-.today-intentions-draft {
+.today-intentions-draft form {
     display: flex;
     margin-top: 1em;
 }
 
-.today-intentions-draft .intentions-draft-form {
+.today-intentions-draft .intentions-draft-fields {
   width: 100%;
+}
+
+.today-intentions-draft button {
+    height: 100%;
 }
 
 .intention[status='completed'] .intention_title {

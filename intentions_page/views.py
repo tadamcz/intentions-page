@@ -92,16 +92,13 @@ def create_day_range(start,end,user):
 
 @login_required
 def promote_draft_to_intentions(request):
-    draft = IntentionsDraft.objects.filter(creator=request.user, date=get_working_day_date()).first()
-
-    intentions = draft.content.splitlines()
+    intentions = request.POST['content'].splitlines()
     intentions.reverse()
     for i in intentions:
         if not i.isspace() and not i == "":
                 Intention.objects.create(title=i, creator=request.user)
 
-    draft.content = ''
-    draft.save()
+    draft = IntentionsDraft.objects.filter(creator=request.user, date=get_working_day_date()).delete()
 
     return redirect('home')
 

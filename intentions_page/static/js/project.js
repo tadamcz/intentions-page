@@ -11,10 +11,11 @@ $(".form-disable-on-submit").on('submit', function (event){
 
 // Cmd-Enter to submit on today's intentions draft
 // Notice that we don't submit on the form that received the shortcut, we submit promote_draft_to_intentions_form.
-today_intentions_draft = $('.today-intentions-draft')
-today_intentions_draft.find('.intentions-draft-form').keydown(function(event) {
+draft = $('.today-intentions-draft')
+draft.find('.intentions-draft-fields').keydown(function(event) {
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
-      today_intentions_draft.find('#promote_draft_to_intentions_form').submit();
+      draft.find('.promote_draft_to_intentions_button').click();
+      event.preventDefault()
     }
 })
 
