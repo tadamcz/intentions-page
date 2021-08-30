@@ -65,7 +65,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'intentions_page',
         'USER': 'postgres',
-        'PASSWORD': 'a',
         'HOST': 'localhost',
         'PORT': '5432',
     }
