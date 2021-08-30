@@ -110,11 +110,10 @@ def edit(request, primary_key):
         raise PermissionDenied
 
     if request.method == 'POST':
-        form = IntentionEditForm(request.POST, instance=intention)
-        form.save()
+        intention.edit_form = IntentionEditForm(request.POST, instance=intention)
+        intention.edit_form.save()
 
-    return redirect(request.headers.get('Referer', 'home'))
-
+    return render(request, "components/single_intention.html", context={'intention': intention})
 
 @login_required
 def append(request, primary_key):

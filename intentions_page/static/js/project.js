@@ -245,59 +245,71 @@ $('.notes-edit-form, .intentions-draft-form').each(function (index, element){
     form.on("input", ajaxThrottled)
 })
 
-$('.intention input[name=completed]').on('change', function (e) {
-    checked = $(e.target).prop('checked')
-    intention = $(e.target).closest('.intention')
-    if (checked){
-        intention.attr('status','completed')
-    }
-    else {
-        intention.attr('status','active')
-    }
-})
+function intentionBindHandlers (intention) {
+    $(intention).find('input[name=completed]').on('change', function (e) {
+        checked = $(e.target).prop('checked')
+        intention = $(e.target).closest('.intention')
+        if (checked){
+            intention.attr('status','completed')
+        }
+        else {
+            intention.attr('status','active')
+        }
+    })
 
-$('.intention input[name=neverminded]').on('change', function (e) {
-    checked = $(e.target).prop('checked')
-    intention = $(e.target).closest('.intention')
-    if (checked){
-        intention.attr('status','neverminded')
-    }
-    else {
-        intention.attr('status','active')
-    }
-})
+    $(intention).find('input[name=neverminded]').on('change', function (e) {
+        checked = $(e.target).prop('checked')
+        intention = $(e.target).closest('.intention')
+        if (checked) {
+            intention.attr('status', 'neverminded')
+        } else {
+            intention.attr('status', 'active')
+        }
+    })
 
 
-function intentionEditAJAX(form){
+    $(intention).find('.intention-edit-form').on('change', function(e) {
+        form = $(e.target).closest('form')
+        intention = $(e.target).closest('.intention')
+        intentionEditAJAX(form, intention)
+        e.preventDefault()
+    })
+}
+
+for (const intention of $('.intention')) {
+    intentionBindHandlers(intention)
+}
+
+function intentionEditAJAX(form, intention){
     $.ajax({
         type: form.attr('method').toUpperCase(),
         url: form.attr('action'),
         data: form.serialize(),
-        success: function(data)
-        {
+
+        success: function (data){
+
             // parses the string into an array of DOM nodes
             nodes = $.parseHTML(data)
+            nodes = $(nodes)
 
-           // re-writes the page
-           $('#_content').replaceWith($(nodes).find('#_content'))
+            // re-writes the intention
+            intention.replaceWith(nodes)
 
-            // re-binds JQuery stuff
-            doThisOnDocumentReady()
+            // re-bind handlers
+            intentionBindHandlers(nodes)
 
+            // If the intention we updated with Ajax had focus, it will have lost focus
+            getFocusFromLocalStorage()
         },
+
         error: function (data)
         {
             console.log(data)
         }
+    })
 
-    });
 }
 
-$('.intention-edit-form').on('change', function (e){
-    form = $(e.target).closest('form')
-    intentionEditAJAX(form)
-    e.preventDefault()
-})
 
 } // close doThisOnDocumentReady
 
