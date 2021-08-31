@@ -25,7 +25,8 @@ function refreshIfReady(){
          });
     }
 }
-setInterval(function(){refreshIfReady()}, 2*60*1000); //refresh every n minutes
+const interval_seconds = 15
+setInterval(function(){refreshIfReady()}, interval_seconds*1000);
 
 })
 </script>
