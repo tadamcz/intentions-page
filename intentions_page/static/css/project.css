@@ -53,7 +53,7 @@ input[name="neverminded"] {
 }
 
 .intention:hover {
-    background-color: #f0f8ff;
+    background-color: rgba(10, 121, 247, 0.2);
 }
 
 .intention form {
@@ -104,7 +104,7 @@ input[name="neverminded"] {
 }
 
 .intention_list [has_keyboard_focus] {
-  background-color: #ebf6f7;
+    background-color: rgba(247, 101, 10, 0.2);
 }
 html, body {
     height:100%;
