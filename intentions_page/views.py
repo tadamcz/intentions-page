@@ -95,7 +95,7 @@ def promote_draft_to_intentions(request):
     intentions = request.POST['content'].splitlines()
     for i in intentions:
         if not i.isspace() and not i == "":
-                Intention.objects.create(title=i, creator=request.user)
+            Intention.objects.create(title=i, creator=request.user)
 
     draft = IntentionsDraft.objects.filter(creator=request.user, date=get_working_day_date()).delete()
 
