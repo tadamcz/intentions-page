@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from intentions_page.forms import IntentionEditForm, NoteEditForm, IntentionsDraftEditForm
 from intentions_page.models import Intention, Note, IntentionsDraft
 import django.utils.timezone as timezone
@@ -97,7 +99,7 @@ def promote_draft_to_intentions(request):
         if not i.isspace() and not i == "":
             Intention.objects.create(title=i, creator=request.user)
 
-    draft = IntentionsDraft.objects.filter(creator=request.user, date=get_working_day_date()).delete()
+    IntentionsDraft.objects.filter(creator=request.user, date=get_working_day_date()).delete()
 
     return redirect('home')
 
@@ -137,8 +139,12 @@ def note(request, primary_key):
 @login_required
 def intentions_draft(request, primary_key):
     if request.method == 'POST':
-        draft = IntentionsDraft.objects.get(id=primary_key)
-        return autosave_field(request, draft)
+        try:
+            with transaction.atomic():
+                draft = IntentionsDraft.objects.select_for_update().get(id=primary_key)
+                return autosave_field(request, draft)
+        except IntentionsDraft.DoesNotExist:  # It would be cleaner not to send these requests in the first place
+            return HttpResponse(status=200)
 
 def autosave_field(request, object):
     if object.creator != get_user(request):
