@@ -77,7 +77,7 @@ input[name="neverminded"] {
     margin-bottom: 1em;
 }
 .intention_list, .today-intentions-draft, .notes-accordion, .tomorrow-intentions-draft-accordion {
-    max-width: 30em;
+    max-width: 50em;
 }
 .intention_list {
   margin-bottom: 1rem;
