@@ -1,12 +1,16 @@
 <script>
 window.addEventListener('load', function() { // wait for JQuery to have loaded with defer
 
-function refreshIfReady(){
-    if (
-            !$('body').hasClass('modal-open') &&
-            !$('#intentionCreateField').val() &&
-            !$('textarea').is(":focus")
-    ) {
+function refresh(force){
+    if (force) {
+        var doRefresh = true
+    }
+    else {
+        var doRefresh = !$('body').hasClass('modal-open')
+    }
+
+    if (doRefresh) {
+        timeLastInteraction = new Date().getTime();
         $.ajax({
            type: "GET",
            url: window.location,
@@ -25,8 +29,24 @@ function refreshIfReady(){
          });
     }
 }
-const interval_seconds = 15
-setInterval(function(){refreshIfReady()}, interval_seconds*1000);
+const interval_seconds = 60 // Every minute
+const interval_seconds_force = 60*60 // Ever hour
+
+var timeLastInteraction = new Date().getTime();
+$(document.body).bind("mousemove keypress", function () {
+    timeLastInteraction = new Date().getTime();
+});
+
+setInterval(function() {
+    if (new Date().getTime() - timeLastInteraction >= interval_seconds_force*1000) {
+        refresh()
+        return
+    }
+
+    if (new Date().getTime() - timeLastInteraction >= interval_seconds*1000) {
+        refresh()
+    }
+}, 1000);
 
 })
 </script>
