@@ -33,7 +33,7 @@ const interval_seconds = 60 // Every minute
 const interval_seconds_force = 60*60 // Ever hour
 
 var timeLastInteraction = new Date().getTime();
-$(document.body).bind("mousemove keypress", function () {
+$(document.body).bind("mousemove keypress touchmove", function () {
     timeLastInteraction = new Date().getTime();
 });
 
