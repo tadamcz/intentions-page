@@ -1,6 +1,7 @@
 """
 Base settings to build other settings files upon.
 """
+import re
 from pathlib import Path
 
 import environ
@@ -301,3 +302,12 @@ REST_FRAMEWORK = {
 CORS_URLS_REGEX = r"^/api/.*$"
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+IGNORABLE_404_URLS = [
+    re.compile(r'\.cgi$'),
+    re.compile(r'\.php$'),
+    re.compile(r'robots\.txt$'),
+    re.compile(r'humans\.txt$'),
+    re.compile(r'ads\.txt$'),
+    re.compile(r'^/favicon\.ico$'),
+]
