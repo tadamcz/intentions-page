@@ -207,28 +207,6 @@ Mousetrap.bind('?', function (e) {
     $('#keyboardShortcutModal').modal('toggle')
 })
 
-// Feedback form
-$("#feedbackForm").submit(function(e) {
-
-    e.preventDefault(); // avoid to execute the actual submit of the form.
-
-    var form = $(this);
-    var url = form.attr('action');
-
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: form.serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               $('#feedbackCallback').text('Success. Thanks for the feedback.').css('color','green')
-           },
-           error: function(data){
-               $('#feedbackCallback').text('Failed. Try emailing me instead: tmkadamcz@gmail.com').css('color','red')
-           }
-         });
-});
-
 function sendAutosaveFormAJAX(form){ // returns a function
     return function (){
         var versionField = form.find("input[name='version']")

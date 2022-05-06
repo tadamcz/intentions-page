@@ -155,24 +155,6 @@ def autosave_field(request, object):
         object.save()
     return HttpResponse(status=200)
 
-def feedback(request):
-    email = request.POST.get("email")
-    message = request.POST.get("message")
-    message = message.replace('\n', '<br>')
-    path = request.path
-
-    html = f"<html>" \
-           f"<br><b>path: </b>{path}" \
-           f"<br><b>email: </b>{email}" \
-           f"<br><b>message: </b>{message}" \
-           f"</html>"
-
-    result = send_mail("Feedback on intentions.page", message, recipient_list=['tmkadamcz@gmail.com'], html_message=html, from_email=email)
-
-    if result == 1:
-        return HttpResponse(status=200)
-    else:
-        return HttpResponse(status=500)
 
 def privacy_policy(request):
     return render(request, "privacy-policy.html")
