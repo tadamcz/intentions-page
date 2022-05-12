@@ -310,4 +310,6 @@ IGNORABLE_404_URLS = [
     re.compile(r'humans\.txt$'),
     re.compile(r'ads\.txt$'),
     re.compile(r'^/favicon\.ico$'),
+    re.compile(r'^/admin/login/?$'),
+    re.compile(r'^/admin/?$'),
 ]
