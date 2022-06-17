@@ -1,0 +1,3 @@
+# User feedback
+
+the notes box can drag horizontally to expand the field, but not vertically
